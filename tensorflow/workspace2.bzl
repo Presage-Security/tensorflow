@@ -822,6 +822,7 @@ def _tf_repositories():
         patch_file = [
             "//third_party/grpc:upb_platform_fix.patch",
             "//third_party/grpc:fix_upb_strncpy.patch",
+            "//third_party/grpc:disable_upb_offsetof_on_darwin.patch",
         ],
         urls = tf_mirror_urls("https://github.com/protocolbuffers/upb/archive/9effcbcb27f0a665f9f345030188c0b291e32482.tar.gz"),
     )
