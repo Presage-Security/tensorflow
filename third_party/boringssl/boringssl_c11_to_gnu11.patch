@@ -1,0 +1,26 @@
+From 9caa6eac585597399815cc5a46dbfc2265357d62 Mon Sep 17 00:00:00 2001
+From: Gregory Kramida <gregory.kramida@presagetech.com>
+Date: Tue, 29 Oct 2024 18:17:32 -0400
+Subject: [PATCH] build(gcc_copts_c11): change from c11 to gnu11 to allow
+ strdup
+
+---
+ BUILD | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/BUILD b/BUILD
+index 206786442..d6eaa26fc 100644
+--- a/BUILD
++++ b/BUILD
+@@ -87,7 +87,7 @@ gcc_copts = [
+     "-fno-common",
+ ]
+ gcc_copts_c11 = [
+-    "-std=c11",
++    "-std=gnu11",
+     "-Wmissing-prototypes",
+     "-Wold-style-definition",
+     "-Wstrict-prototypes",
+-- 
+2.34.1
+
