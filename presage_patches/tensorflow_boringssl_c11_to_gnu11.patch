@@ -1,0 +1,58 @@
+From 39f82e0121bd7e53b93457b94badf0f1fa6bd1bd Mon Sep 17 00:00:00 2001
+From: Gregory Kramida <gregory.kramida@presagetech.com>
+Date: Tue, 29 Oct 2024 18:22:39 -0400
+Subject: [PATCH] build(BoringSslDep): add patch to move to gnu11 C standard
+
+---
+ tensorflow/workspace2.bzl                     |  1 +
+ .../boringssl/boringssl_c11_to_gnu11.patch    | 26 +++++++++++++++++++
+ 2 files changed, 27 insertions(+)
+ create mode 100644 third_party/boringssl/boringssl_c11_to_gnu11.patch
+
+diff --git a/tensorflow/workspace2.bzl b/tensorflow/workspace2.bzl
+index 16c1229536a..5b28e5601be 100644
+--- a/tensorflow/workspace2.bzl
++++ b/tensorflow/workspace2.bzl
+@@ -484,6 +484,7 @@ def _tf_repositories():
+         sha256 = "9dc53f851107eaf87b391136d13b815df97ec8f76dadb487b58b2fc45e624d2c",
+         strip_prefix = "boringssl-c00d7ca810e93780bd0c8ee4eea28f4f2ea4bcdc",
+         system_build_file = "//third_party/systemlibs:boringssl.BUILD",
++        patch_file = ["//third_party/boringssl:boringssl_c11_to_gnu11.patch"],
+         urls = tf_mirror_urls("https://github.com/google/boringssl/archive/c00d7ca810e93780bd0c8ee4eea28f4f2ea4bcdc.tar.gz"),
+     )
+ 
+diff --git a/third_party/boringssl/boringssl_c11_to_gnu11.patch b/third_party/boringssl/boringssl_c11_to_gnu11.patch
+new file mode 100644
+index 00000000000..7e842b04b94
+--- /dev/null
++++ b/third_party/boringssl/boringssl_c11_to_gnu11.patch
+@@ -0,0 +1,26 @@
++From 9caa6eac585597399815cc5a46dbfc2265357d62 Mon Sep 17 00:00:00 2001
++From: Gregory Kramida <gregory.kramida@presagetech.com>
++Date: Tue, 29 Oct 2024 18:17:32 -0400
++Subject: [PATCH] build(gcc_copts_c11): change from c11 to gnu11 to allow
++ strdup
++
++---
++ BUILD | 2 +-
++ 1 file changed, 1 insertion(+), 1 deletion(-)
++
++diff --git a/BUILD b/BUILD
++index 206786442..d6eaa26fc 100644
++--- a/BUILD
+++++ b/BUILD
++@@ -87,7 +87,7 @@ gcc_copts = [
++     "-fno-common",
++ ]
++ gcc_copts_c11 = [
++-    "-std=c11",
+++    "-std=gnu11",
++     "-Wmissing-prototypes",
++     "-Wold-style-definition",
++     "-Wstrict-prototypes",
++-- 
++2.34.1
++
+-- 
+2.34.1
+

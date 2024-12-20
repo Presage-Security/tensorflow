@@ -1,0 +1,61 @@
+From 89505ccd8cb2d92b529798be78b27adf8e2ccdd7 Mon Sep 17 00:00:00 2001
+From: Gregory Kramida <gregory.kramida@presagetech.com>
+Date: Fri, 23 Aug 2024 18:26:28 -0400
+Subject: [PATCH] fix(GrpcUpbDep): fix upb strncpy misuse
+
+---
+ tensorflow/workspace2.bzl              |  5 ++++-
+ third_party/grpc/fix_upb_strncpy.patch | 25 +++++++++++++++++++++++++
+ 2 files changed, 29 insertions(+), 1 deletion(-)
+ create mode 100644 third_party/grpc/fix_upb_strncpy.patch
+
+diff --git a/tensorflow/workspace2.bzl b/tensorflow/workspace2.bzl
+index 9e15c75c183..386c7a7714e 100644
+--- a/tensorflow/workspace2.bzl
++++ b/tensorflow/workspace2.bzl
+@@ -813,7 +813,10 @@ def _tf_repositories():
+         name = "upb",
+         sha256 = "61d0417abd60e65ed589c9deee7c124fe76a4106831f6ad39464e1525cef1454",
+         strip_prefix = "upb-9effcbcb27f0a665f9f345030188c0b291e32482",
+-        patch_file = ["//third_party/grpc:upb_platform_fix.patch"],
++        patch_file = [
++            "//third_party/grpc:upb_platform_fix.patch",
++            "//third_party/grpc:fix_upb_strncpy.patch",
++        ],
+         urls = tf_mirror_urls("https://github.com/protocolbuffers/upb/archive/9effcbcb27f0a665f9f345030188c0b291e32482.tar.gz"),
+     )
+ 
+diff --git a/third_party/grpc/fix_upb_strncpy.patch b/third_party/grpc/fix_upb_strncpy.patch
+new file mode 100644
+index 00000000000..cf874b0f8b2
+--- /dev/null
++++ b/third_party/grpc/fix_upb_strncpy.patch
+@@ -0,0 +1,25 @@
++From 0ad635433eb4f3f53a475be1bdbbc725ebffaa8f Mon Sep 17 00:00:00 2001
++From: Gregory Kramida <gregory.kramida@presagetech.com>
++Date: Fri, 23 Aug 2024 17:49:06 -0400
++Subject: [PATCH] fix(StatusSetErrMsg): fix mixuse of strncpy
++
++---
++ upb/upb.c | 2 +-
++ 1 file changed, 1 insertion(+), 1 deletion(-)
++
++diff --git a/upb/upb.c b/upb/upb.c
++index 266ea7d7..4befd414 100644
++--- a/upb/upb.c
+++++ b/upb/upb.c
++@@ -37,7 +37,7 @@ const char *upb_status_errmsg(const upb_status *status) { return status->msg; }
++ void upb_status_seterrmsg(upb_status *status, const char *msg) {
++   if (!status) return;
++   status->ok = false;
++-  strncpy(status->msg, msg, sizeof(status->msg));
+++  strncpy(status->msg, msg, sizeof(status->msg) - 1);
++   nullz(status);
++ }
++ 
++-- 
++2.34.1
++
+-- 
+2.34.1
+
