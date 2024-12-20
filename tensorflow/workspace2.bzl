@@ -438,6 +438,7 @@ def _tf_repositories():
         patch_file = [
             "//third_party/grpc:generate_cc_env_fix.patch",
             "//third_party/grpc:register_go_toolchain.patch",
+            "//third_party/grpc:add_cares_darwin_arm64_support.patch",
         ],
         system_link_files = {
             "//third_party/systemlibs:BUILD": "bazel/BUILD",
