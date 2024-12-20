@@ -119,10 +119,7 @@ cc_library_with_tflite_with_c_headers_test(
     tflite_deps = [
         ":c_api",
     ],
-    deps = [
-        "//tensorflow/lite/core/c:c_api_experimental",
-        "//tensorflow/lite/core/c:c_api_opaque",
-    ],
+    deps = ["//tensorflow/lite/core/c:c_api_experimental"],
 )
 
 # Same as ":c_api_experimental", but without linking in the default CreateOpResolver implementation.
@@ -143,10 +140,7 @@ cc_library_with_tflite_with_c_headers_test(
     tflite_deps = [
         ":c_api_without_op_resolver",
     ],
-    deps = [
-        "//tensorflow/lite/core/c:c_api_experimental_without_op_resolver",
-        "//tensorflow/lite/core/c:c_api_opaque_without_op_resolver",
-    ],
+    deps = ["//tensorflow/lite/core/c:c_api_experimental_without_op_resolver"],
 )
 
 # Same as ":c_api_experimental", but without linking in the default CreateOpResolver implementation,
@@ -183,6 +177,7 @@ cc_library_with_tflite_with_c_headers_test(
     copts = tflite_copts() + tflite_copts_warnings(),
     generate_opaque_delegate_target = True,
     tflite_deps = [":c_api"],
+    linkstatic = 1,
     deps = ["//tensorflow/lite/core/c:c_api_opaque"],
 )
 
@@ -209,7 +204,7 @@ cc_library_with_tflite_with_c_headers_test(
     tflite_deps = [
         ":c_api_without_op_resolver_without_alwayslink",
     ],
-    deps = ["//tensorflow/lite/core/c:c_api_opaque_without_op_resolver_without_alwayslink"],
+    deps = ["//tensorflow/lite/core/c:c_api_experimental_without_op_resolver_without_alwayslink"],
 )
 
 cc_library_with_tflite_with_c_headers_test(
@@ -457,7 +452,6 @@ cc_test(
         ":c_api_experimental",
         "//tensorflow/lite/core/c:c_api",
         "//tensorflow/lite/core/c:c_api_experimental",
-        "//tensorflow/lite/core/c:c_api_opaque",
         "//tensorflow/lite/core/c:c_api_types",
         "//tensorflow/lite/core/c:common",
     ],

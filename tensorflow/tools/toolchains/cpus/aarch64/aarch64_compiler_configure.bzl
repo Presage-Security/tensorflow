@@ -1,7 +1,7 @@
 """Configurations of AARCH64 builds used with Docker container."""
 
 load("//tensorflow/tools/toolchains:cpus/aarch64/aarch64.bzl", "remote_aarch64_configure")
-load("//third_party/py:python_configure.bzl", "remote_python_configure")
+load("//third_party/py/non_hermetic:python_configure.bzl", "remote_python_configure")
 load("//third_party/remote_config:remote_platform_configure.bzl", "remote_platform_configure")
 
 def ml2014_tf_aarch64_configs(name_container_map, env):
