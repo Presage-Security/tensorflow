@@ -137,14 +137,15 @@ objc_library(
     ],
 )
 
-objc_library(
+cc_library(
     name = "inference_context",
     srcs = ["inference_context.cc"],
     hdrs = ["inference_context.h"],
     copts = DEFAULT_COPTS + [
         "-ObjC++",
+        "-fobjc-arc",
     ],
-    sdk_frameworks = ["Metal"],
+    linkopts = ["-framework Metal"],
     deps = [
         ":compute_task",
         ":inference_context_cc_fbs",
@@ -170,6 +171,7 @@ objc_library(
         "@com_google_absl//absl/strings",
         "@com_google_absl//absl/time",
     ],
+    alwayslink = 1,
 )
 
 flatbuffer_cc_library(

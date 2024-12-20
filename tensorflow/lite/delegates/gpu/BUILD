@@ -116,13 +116,16 @@ cc_library(
     }) + tflite_extra_gles_deps(),
 )
 
-objc_library(
+cc_library(
     name = "metal_delegate",
-    srcs = ["metal_delegate.mm"],
+    srcs = ["metal_delegate.cc"],
     hdrs = ["metal_delegate.h"],
-    copts = ["-std=c++17"],
-    module_name = "TensorFlowLiteCMetal",
-    sdk_frameworks = ["Metal"],
+    copts = [
+        "-ObjC++",
+        "-std=c++17",
+        "-fobjc-arc",
+    ],
+    linkopts = ["-framework Metal"],
     deps = [
         "//tensorflow/lite:kernel_api",
         "//tensorflow/lite:minimal_logging",
@@ -145,14 +148,20 @@ objc_library(
         "@com_google_absl//absl/container:flat_hash_set",
         "@com_google_absl//absl/types:span",
     ],
+    alwayslink = 1,
 )
 
-objc_library(
+cc_library(
     name = "metal_delegate_internal",
     hdrs = ["metal_delegate_internal.h"],
-    copts = ["-std=c++17"],
-    sdk_frameworks = ["Metal"],
+    copts = [
+         "-ObjC++",
+         "-std=c++17",
+        "-fobjc-arc",
+    ],
+    linkopts = ["-framework Metal"],
     deps = ["//tensorflow/lite/delegates/gpu:metal_delegate"],
+    alwayslink = 1,
 )
 
 # build -c opt --config android_arm64 --copt -Os --copt -DTFLITE_GPU_BINARY_RELEASE --linkopt -s --strip always :libtensorflowlite_gpu_gl.so
