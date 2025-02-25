@@ -1,0 +1,12 @@
+diff --git a/BUILD b/BUILD
+--- a/BUILD	(revision 60607da72e89ba0c84c84054d2e562d8b6b61177)
++++ b/BUILD	(date 1740490593002)
+@@ -79,7 +79,7 @@
+         "upb/upb.h",
+         "upb/upb.hpp",
+     ],
+-    copts = UPB_DEFAULT_COPTS,
++    copts = UPB_DEFAULT_COPTS + ["-Wno-gnu-offsetof-extensions"],
+     visibility = ["//visibility:public"],
+     deps = [
+         ":fastdecode",
