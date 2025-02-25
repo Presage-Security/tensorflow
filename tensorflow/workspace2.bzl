@@ -432,12 +432,12 @@ def _tf_repositories():
     # WARNING: make sure ncteisen@ and vpai@ are cc-ed on any CL to change the below rule
     tf_http_archive(
         name = "com_github_grpc_grpc",
-        sha256 = "b956598d8cbe168b5ee717b5dafa56563eb5201a947856a6688bbeac9cac4e1f",
-        strip_prefix = "grpc-b54a5b338637f92bfcf4b0bc05e0f57a5fd8fadd",
+        sha256 = "70f9d36082bb53e21d5333a30f2b8b92cda1e961996b3cd99034faf6ef14a61b",
+        strip_prefix = "grpc-2d6b8f61cfdd1c4d2d7c1aae65a4fbf00e3e0981",
         system_build_file = "//third_party/systemlibs:grpc.BUILD",
         patch_file = [
-            "//third_party/grpc:generate_cc_env_fix.patch",
             "//third_party/grpc:register_go_toolchain.patch",
+            "//third_party/grpc:add_missing_absl_strings_numbers_header.patch",
         ],
         system_link_files = {
             "//third_party/systemlibs:BUILD": "bazel/BUILD",
@@ -448,7 +448,7 @@ def _tf_repositories():
             "//third_party/systemlibs:grpc.bazel.generate_cc.bzl": "bazel/generate_cc.bzl",
             "//third_party/systemlibs:grpc.bazel.protobuf.bzl": "bazel/protobuf.bzl",
         },
-        urls = tf_mirror_urls("https://github.com/grpc/grpc/archive/b54a5b338637f92bfcf4b0bc05e0f57a5fd8fadd.tar.gz"),
+        urls = tf_mirror_urls("https://github.com/grpc/grpc/archive/2d6b8f61cfdd1c4d2d7c1aae65a4fbf00e3e0981.tar.gz"),
     )
 
     tf_http_archive(
@@ -815,10 +815,10 @@ def _tf_repositories():
 
     tf_http_archive(
         name = "upb",
-        sha256 = "61d0417abd60e65ed589c9deee7c124fe76a4106831f6ad39464e1525cef1454",
-        strip_prefix = "upb-9effcbcb27f0a665f9f345030188c0b291e32482",
+        sha256 = "c0b97bf91dfea7e8d7579c24e2ecdd02d10b00f3c5defc3dce23d95100d0e664",
+        strip_prefix = "upb-60607da72e89ba0c84c84054d2e562d8b6b61177",
         patch_file = ["//third_party/grpc:upb_platform_fix.patch"],
-        urls = tf_mirror_urls("https://github.com/protocolbuffers/upb/archive/9effcbcb27f0a665f9f345030188c0b291e32482.tar.gz"),
+        urls = tf_mirror_urls("https://github.com/protocolbuffers/upb/archive/60607da72e89ba0c84c84054d2e562d8b6b61177.tar.gz"),
     )
 
     tf_http_archive(

@@ -1,8 +1,12 @@
+Index: BUILD
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
 diff --git a/BUILD b/BUILD
-index ad85b202..2311b2e4 100644
---- a/BUILD
-+++ b/BUILD
-@@ -44,7 +44,7 @@ config_setting(
+--- a/BUILD	(revision 60607da72e89ba0c84c84054d2e562d8b6b61177)
++++ b/BUILD	(date 1740427386156)
+@@ -28,7 +28,7 @@
 
  config_setting(
      name = "windows",
@@ -10,4 +14,4 @@ index ad85b202..2311b2e4 100644
 +    constraint_values = ["@platforms//os:windows"],
  )
 
- config_setting(
+ upb_fasttable_enabled(
