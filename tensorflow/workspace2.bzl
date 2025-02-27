@@ -45,8 +45,8 @@ load("//third_party/nasm:workspace.bzl", nasm = "repo")
 load("//third_party/nccl:nccl_configure.bzl", "nccl_configure")
 load("//third_party/opencl_headers:workspace.bzl", opencl_headers = "repo")
 load("//third_party/pasta:workspace.bzl", pasta = "repo")
-load("//third_party/py/non_hermetic:python_configure.bzl", "python_configure")
 load("//third_party/py/ml_dtypes:workspace.bzl", ml_dtypes = "repo")
+load("//third_party/py/non_hermetic:python_configure.bzl", "python_configure")
 load("//third_party/pybind11_abseil:workspace.bzl", pybind11_abseil = "repo")
 load("//third_party/pybind11_bazel:workspace.bzl", pybind11_bazel = "repo")
 load("//third_party/ruy:workspace.bzl", ruy = "repo")
@@ -438,6 +438,7 @@ def _tf_repositories():
         patch_file = [
             "//third_party/grpc:register_go_toolchain.patch",
             "//third_party/grpc:add_missing_absl_strings_numbers_header.patch",
+            "//third_party/grpc:tweak_re2_cmake_module_root_to_bazel_structure.patch",
         ],
         system_link_files = {
             "//third_party/systemlibs:BUILD": "bazel/BUILD",
