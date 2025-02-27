@@ -1,0 +1,48 @@
+diff --git a/third_party/grpc/tweak_re2_cmake_module_root_to_bazel_structure.patch b/third_party/grpc/tweak_re2_cmake_module_root_to_bazel_structure.patch
+new file mode 100644
+--- /dev/null	(date 1740664386319)
++++ b/third_party/grpc/tweak_re2_cmake_module_root_to_bazel_structure.patch	(date 1740664386319)
+@@ -0,0 +1,17 @@
++Index: cmake/re2.cmake
++IDEA additional info:
++Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
++<+>UTF-8
++===================================================================
++diff --git a/cmake/re2.cmake b/cmake/re2.cmake
++--- a/cmake/re2.cmake	(revision 2d6b8f61cfdd1c4d2d7c1aae65a4fbf00e3e0981)
+++++ b/cmake/re2.cmake	(date 1740426380842)
++@@ -18,7 +18,7 @@
++
++ if(gRPC_RE2_PROVIDER STREQUAL "module")
++   if(NOT RE2_ROOT_DIR)
++-    set(RE2_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/third_party/re2)
+++    set(RE2_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../com_googlesource_code_re2)
++   endif()
++   if(EXISTS "${RE2_ROOT_DIR}/CMakeLists.txt")
++     # Explicitly disable BUILD_TESTING to avoid re2's CMakeLists.txt triggering https://github.com/grpc/grpc/issues/23586
+Index: tensorflow/workspace2.bzl
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/tensorflow/workspace2.bzl b/tensorflow/workspace2.bzl
+--- a/tensorflow/workspace2.bzl	(revision a150ca2c416cf27dd672b58f98fcd3760b366bd4)
++++ b/tensorflow/workspace2.bzl	(date 1740664841881)
+@@ -45,8 +45,8 @@
+ load("//third_party/nccl:nccl_configure.bzl", "nccl_configure")
+ load("//third_party/opencl_headers:workspace.bzl", opencl_headers = "repo")
+ load("//third_party/pasta:workspace.bzl", pasta = "repo")
+-load("//third_party/py/non_hermetic:python_configure.bzl", "python_configure")
+ load("//third_party/py/ml_dtypes:workspace.bzl", ml_dtypes = "repo")
++load("//third_party/py/non_hermetic:python_configure.bzl", "python_configure")
+ load("//third_party/pybind11_abseil:workspace.bzl", pybind11_abseil = "repo")
+ load("//third_party/pybind11_bazel:workspace.bzl", pybind11_bazel = "repo")
+ load("//third_party/ruy:workspace.bzl", ruy = "repo")
+@@ -438,6 +438,7 @@
+         patch_file = [
+             "//third_party/grpc:register_go_toolchain.patch",
+             "//third_party/grpc:add_missing_absl_strings_numbers_header.patch",
++            "//third_party/grpc:tweak_re2_cmake_module_root_to_bazel_structure.patch",
+         ],
+         system_link_files = {
+             "//third_party/systemlibs:BUILD": "bazel/BUILD",
