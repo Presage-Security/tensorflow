@@ -57,6 +57,11 @@ load("@//tensorflow:workspace2.bzl", "tf_workspace2")
 
 tf_workspace2()
 
+# Initialize the protobuf repository and all dependencies.
+load("@//third_party/protobuf:workspace.bzl", "set_up_protobuf")
+
+set_up_protobuf()
+
 load("@//tensorflow:workspace1.bzl", "tf_workspace1")
 
 tf_workspace1()

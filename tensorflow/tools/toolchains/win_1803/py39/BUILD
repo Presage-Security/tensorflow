@@ -35,7 +35,7 @@ package(default_visibility = ["//visibility:public"])
 
 py_runtime(
     name = "py3_runtime",
-    interpreter_path = "c:/Python39/python.exe",
+    interpreter_path = "/C:/Python39/python.exe",
     python_version = "PY3",
 )
 

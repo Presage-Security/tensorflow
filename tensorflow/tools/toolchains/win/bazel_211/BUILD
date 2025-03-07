@@ -56,6 +56,7 @@ cc_toolchain_suite(
         "x64_windows_msys": ":cc-compiler-x64_windows_msys",
         "x64_windows": ":cc-compiler-x64_windows",
         "armeabi-v7a": ":cc-compiler-armeabi-v7a",
+        "k8": ":cc-compiler-k8",
     },
 )
 
@@ -353,4 +354,19 @@ toolchain(
 filegroup(
     name = "link_dynamic_library",
     srcs = ["link_dynamic_library.sh"],
+)
+
+cc_toolchain(
+    name = "cc-compiler-k8",
+    all_files = ":empty",
+    ar_files = ":empty",
+    as_files = ":empty",
+    compiler_files = ":empty",
+    dwp_files = ":empty",
+    linker_files = ":empty",
+    objcopy_files = ":empty",
+    strip_files = ":empty",
+    supports_param_files = 1,
+    toolchain_config = ":stub_k8",
+    toolchain_identifier = "stub_k8",
 )

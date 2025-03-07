@@ -45,8 +45,8 @@ load("//third_party/nasm:workspace.bzl", nasm = "repo")
 load("//third_party/nccl:nccl_configure.bzl", "nccl_configure")
 load("//third_party/opencl_headers:workspace.bzl", opencl_headers = "repo")
 load("//third_party/pasta:workspace.bzl", pasta = "repo")
-load("//third_party/py/non_hermetic:python_configure.bzl", "python_configure")
 load("//third_party/py/ml_dtypes:workspace.bzl", ml_dtypes = "repo")
+load("//third_party/py/non_hermetic:python_configure.bzl", "python_configure")
 load("//third_party/pybind11_abseil:workspace.bzl", pybind11_abseil = "repo")
 load("//third_party/pybind11_bazel:workspace.bzl", pybind11_bazel = "repo")
 load("//third_party/ruy:workspace.bzl", ruy = "repo")
@@ -379,15 +379,18 @@ def _tf_repositories():
 
     tf_http_archive(
         name = "com_google_protobuf",
-        patch_file = ["//third_party/protobuf:protobuf.patch"],
-        sha256 = "f66073dee0bc159157b0bd7f502d7d1ee0bc76b3c1eac9836927511bdc4b3fc1",
-        strip_prefix = "protobuf-3.21.9",
+        patch_file = [
+            "//third_party/protobuf:protobuf_namespace.patch",
+            "//third_party/protobuf:protobuf_proto_gen.patch",
+        ],
+        sha256 = "387478260190c540388839a3449c635a69708d92fc38ea6e2364b1196db90ea5",
+        strip_prefix = "protobuf-2434ef2adf0c74149b9d547ac5fb545a1ff8b6b5",
         system_build_file = "//third_party/systemlibs:protobuf.BUILD",
         system_link_files = {
             "//third_party/systemlibs:protobuf.bzl": "protobuf.bzl",
             "//third_party/systemlibs:protobuf_deps.bzl": "protobuf_deps.bzl",
         },
-        urls = tf_mirror_urls("https://github.com/protocolbuffers/protobuf/archive/v3.21.9.zip"),
+        urls = tf_mirror_urls("https://github.com/protocolbuffers/protobuf/archive/2434ef2adf0c74149b9d547ac5fb545a1ff8b6b5.tar.gz"),
     )
 
     tf_http_archive(
@@ -432,13 +435,9 @@ def _tf_repositories():
     # WARNING: make sure ncteisen@ and vpai@ are cc-ed on any CL to change the below rule
     tf_http_archive(
         name = "com_github_grpc_grpc",
-        sha256 = "b956598d8cbe168b5ee717b5dafa56563eb5201a947856a6688bbeac9cac4e1f",
-        strip_prefix = "grpc-b54a5b338637f92bfcf4b0bc05e0f57a5fd8fadd",
+        sha256 = "2e56df4a43bbb406dad3d62da36888e4057968ea126d0870e1c0560a8f6ea1d3",
+        strip_prefix = "grpc-ac1418547838ab067a02af4402046f7bc1cbc44c",
         system_build_file = "//third_party/systemlibs:grpc.BUILD",
-        patch_file = [
-            "//third_party/grpc:generate_cc_env_fix.patch",
-            "//third_party/grpc:register_go_toolchain.patch",
-        ],
         system_link_files = {
             "//third_party/systemlibs:BUILD": "bazel/BUILD",
             "//third_party/systemlibs:grpc.BUILD": "src/compiler/BUILD",
@@ -448,7 +447,7 @@ def _tf_repositories():
             "//third_party/systemlibs:grpc.bazel.generate_cc.bzl": "bazel/generate_cc.bzl",
             "//third_party/systemlibs:grpc.bazel.protobuf.bzl": "bazel/protobuf.bzl",
         },
-        urls = tf_mirror_urls("https://github.com/grpc/grpc/archive/b54a5b338637f92bfcf4b0bc05e0f57a5fd8fadd.tar.gz"),
+        urls = tf_mirror_urls("https://github.com/grpc/grpc/archive/ac1418547838ab067a02af4402046f7bc1cbc44c.tar.gz"),
     )
 
     tf_http_archive(
@@ -790,10 +789,10 @@ def _tf_repositories():
 
     tf_http_archive(
         name = "pybind11_protobuf",
-        urls = tf_mirror_urls("https://github.com/pybind/pybind11_protobuf/archive/80f3440cd8fee124e077e2e47a8a17b78b451363.zip"),
-        sha256 = "c7ab64b1ccf9a678694a89035a8c865a693e4e872803778f91f0965c2f281d78",
-        strip_prefix = "pybind11_protobuf-80f3440cd8fee124e077e2e47a8a17b78b451363",
-        patch_file = ["//third_party/pybind11_protobuf:remove_license.patch"],
+        urls = tf_mirror_urls("https://github.com/pybind/pybind11_protobuf/archive/324672e6bb0fe8e66cd01e3936f635e53fc1bdc5.zip"),
+        sha256 = "fc1e5fa435d71605f1e783295d1af3c1ab4c19111b48aeb3dc03e81922547333",
+        strip_prefix = "pybind11_protobuf-324672e6bb0fe8e66cd01e3936f635e53fc1bdc5",
+        #        patch_file = ["//third_party/pybind11_protobuf:remove_license.patch"],
     )
 
     tf_http_archive(
@@ -813,13 +812,13 @@ def _tf_repositories():
         urls = tf_mirror_urls("https://github.com/bazelbuild/rules_go/releases/download/v0.34.0/rules_go-v0.34.0.zip"),
     )
 
-    tf_http_archive(
-        name = "upb",
-        sha256 = "61d0417abd60e65ed589c9deee7c124fe76a4106831f6ad39464e1525cef1454",
-        strip_prefix = "upb-9effcbcb27f0a665f9f345030188c0b291e32482",
-        patch_file = ["//third_party/grpc:upb_platform_fix.patch"],
-        urls = tf_mirror_urls("https://github.com/protocolbuffers/upb/archive/9effcbcb27f0a665f9f345030188c0b291e32482.tar.gz"),
-    )
+    #    tf_http_archive(
+    #        name = "upb",
+    #        sha256 = "61d0417abd60e65ed589c9deee7c124fe76a4106831f6ad39464e1525cef1454",
+    #        strip_prefix = "upb-9effcbcb27f0a665f9f345030188c0b291e32482",
+    #        patch_file = ["//third_party/grpc:upb_platform_fix.patch"],
+    #        urls = tf_mirror_urls("https://github.com/protocolbuffers/upb/archive/9effcbcb27f0a665f9f345030188c0b291e32482.tar.gz"),
+    #    )
 
     tf_http_archive(
         name = "com_github_glog_glog",

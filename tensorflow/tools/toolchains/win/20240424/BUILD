@@ -84,6 +84,7 @@ cc_toolchain_suite(
         "x64_arm64_windows|clang-cl": ":cc-compiler-arm64_windows-clang-cl",
         "arm64_windows|clang-cl": ":cc-compiler-arm64_windows-clang-cl",
         "armeabi-v7a": ":cc-compiler-armeabi-v7a",
+        "k8": ":cc-compiler-k8",
     },
 )
 
@@ -659,4 +660,19 @@ toolchain(
     ],
     toolchain = ":cc-compiler-armeabi-v7a",
     toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
+)
+
+cc_toolchain(
+    name = "cc-compiler-k8",
+    all_files = ":empty",
+    ar_files = ":empty",
+    as_files = ":empty",
+    compiler_files = ":empty",
+    dwp_files = ":empty",
+    linker_files = ":empty",
+    objcopy_files = ":empty",
+    strip_files = ":empty",
+    supports_param_files = 1,
+    toolchain_config = ":stub_k8",
+    toolchain_identifier = "stub_k8",
 )
