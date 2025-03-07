@@ -1,0 +1,12 @@
+diff --git a/BUILD b/BUILD
+--- a/BUILD	(revision e4635f223e7d36dfbea3b722a4ca4807a7e882e2)
++++ b/BUILD	(date 1741386479999)
+@@ -124,7 +124,7 @@
+         "upb/upb.h",
+         "upb/upb.hpp",
+     ],
+-    copts = UPB_DEFAULT_COPTS,
++    copts = UPB_DEFAULT_COPTS + ["-Wno-gnu-offsetof-extensions"],
+     visibility = ["//visibility:public"],
+     deps = [
+         ":extension_registry",

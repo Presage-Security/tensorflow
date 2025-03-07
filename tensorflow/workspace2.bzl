@@ -813,7 +813,9 @@ def _tf_repositories():
         name = "upb",
         sha256 = "017a7e8e4e842d01dba5dc8aa316323eee080cd1b75986a7d1f94d87220e6502",
         strip_prefix = "upb-e4635f223e7d36dfbea3b722a4ca4807a7e882e2",
-        #        patch_file = ["//third_party/grpc:upb_platform_fix.patch"],
+        patch_file = [
+            "//third_party/grpc:disable_upb_offsetof_on_darwin.patch",
+        ],
         urls = tf_mirror_urls("https://github.com/protocolbuffers/upb/archive/e4635f223e7d36dfbea3b722a4ca4807a7e882e2.tar.gz"),
     )
 
