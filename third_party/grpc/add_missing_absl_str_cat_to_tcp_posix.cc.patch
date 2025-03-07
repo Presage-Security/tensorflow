@@ -1,0 +1,12 @@
+diff --git a/src/core/lib/iomgr/tcp_posix.cc b/src/core/lib/iomgr/tcp_posix.cc
+--- a/src/core/lib/iomgr/tcp_posix.cc	(revision 56257bb649b3d3748a7270e1968768b00e3ddbc4)
++++ b/src/core/lib/iomgr/tcp_posix.cc	(date 1741388283223)
+@@ -48,6 +48,8 @@
+ #include <grpc/support/sync.h>
+ #include <grpc/support/time.h>
+
++#include "absl/strings/str_cat.h"
++
+ #include "src/core/lib/address_utils/sockaddr_utils.h"
+ #include "src/core/lib/debug/event_log.h"
+ #include "src/core/lib/debug/stats.h"

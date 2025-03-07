@@ -433,7 +433,10 @@ def _tf_repositories():
     tf_http_archive(
         name = "com_github_grpc_grpc",
         sha256 = "20dd8c55b53dbd065fcd4f84aa00e388dddcfd49b99066784681663f86a9e37f",
-        patch_file = ["//third_party/grpc:tweak_re2_cmake_module_root_to_bazel_structure.patch"],
+        patch_file = [
+            "//third_party/grpc:tweak_re2_cmake_module_root_to_bazel_structure.patch",
+            "//third_party/grpc:add_missing_absl_str_cat_to_tcp_posix.cc.patch",
+        ],
         strip_prefix = "grpc-ada541b1d7dcf9aaf51ec2f835a6e32ad1f382b0",
         system_build_file = "//third_party/systemlibs:grpc.BUILD",
         system_link_files = {
