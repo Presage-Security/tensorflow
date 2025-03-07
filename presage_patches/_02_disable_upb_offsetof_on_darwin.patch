@@ -1,0 +1,36 @@
+diff --git a/tensorflow/workspace2.bzl b/tensorflow/workspace2.bzl
+--- a/tensorflow/workspace2.bzl	(revision 9c7897ca007e92cccffee6f68f72acd31ce3c281)
++++ b/tensorflow/workspace2.bzl	(date 1741386727524)
+@@ -813,7 +813,9 @@
+         name = "upb",
+         sha256 = "017a7e8e4e842d01dba5dc8aa316323eee080cd1b75986a7d1f94d87220e6502",
+         strip_prefix = "upb-e4635f223e7d36dfbea3b722a4ca4807a7e882e2",
+-        #        patch_file = ["//third_party/grpc:upb_platform_fix.patch"],
++        patch_file = [
++            "//third_party/grpc:disable_upb_offsetof_on_darwin.patch",
++        ],
+         urls = tf_mirror_urls("https://github.com/protocolbuffers/upb/archive/e4635f223e7d36dfbea3b722a4ca4807a7e882e2.tar.gz"),
+     )
+
+Index: third_party/grpc/disable_upb_offsetof_on_darwin.patch
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/third_party/grpc/disable_upb_offsetof_on_darwin.patch b/third_party/grpc/disable_upb_offsetof_on_darwin.patch
+new file mode 100644
+--- /dev/null	(date 1741386722991)
++++ b/third_party/grpc/disable_upb_offsetof_on_darwin.patch	(date 1741386722991)
+@@ -0,0 +1,12 @@
++diff --git a/BUILD b/BUILD
++--- a/BUILD	(revision e4635f223e7d36dfbea3b722a4ca4807a7e882e2)
+++++ b/BUILD	(date 1741386479999)
++@@ -124,7 +124,7 @@
++         "upb/upb.h",
++         "upb/upb.hpp",
++     ],
++-    copts = UPB_DEFAULT_COPTS,
+++    copts = UPB_DEFAULT_COPTS + ["-Wno-gnu-offsetof-extensions"],
++     visibility = ["//visibility:public"],
++     deps = [
++         ":extension_registry",
