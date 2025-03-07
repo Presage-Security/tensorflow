@@ -1,0 +1,53 @@
+diff --git a/tensorflow/workspace2.bzl b/tensorflow/workspace2.bzl
+--- a/tensorflow/workspace2.bzl	(revision f16e0b86f4bcdd62573bcaf56ca336f6bfb152a3)
++++ b/tensorflow/workspace2.bzl	(date 1741382155630)
+@@ -45,8 +45,8 @@
+ load("//third_party/nccl:nccl_configure.bzl", "nccl_configure")
+ load("//third_party/opencl_headers:workspace.bzl", opencl_headers = "repo")
+ load("//third_party/pasta:workspace.bzl", pasta = "repo")
+-load("//third_party/py/non_hermetic:python_configure.bzl", "python_configure")
+ load("//third_party/py/ml_dtypes:workspace.bzl", ml_dtypes = "repo")
++load("//third_party/py/non_hermetic:python_configure.bzl", "python_configure")
+ load("//third_party/pybind11_abseil:workspace.bzl", pybind11_abseil = "repo")
+ load("//third_party/pybind11_bazel:workspace.bzl", pybind11_bazel = "repo")
+ load("//third_party/ruy:workspace.bzl", ruy = "repo")
+@@ -432,13 +432,9 @@
+     # WARNING: make sure ncteisen@ and vpai@ are cc-ed on any CL to change the below rule
+     tf_http_archive(
+         name = "com_github_grpc_grpc",
+-        sha256 = "b956598d8cbe168b5ee717b5dafa56563eb5201a947856a6688bbeac9cac4e1f",
+-        strip_prefix = "grpc-b54a5b338637f92bfcf4b0bc05e0f57a5fd8fadd",
++        sha256 = "20dd8c55b53dbd065fcd4f84aa00e388dddcfd49b99066784681663f86a9e37f",
++        strip_prefix = "grpc-ada541b1d7dcf9aaf51ec2f835a6e32ad1f382b0",
+         system_build_file = "//third_party/systemlibs:grpc.BUILD",
+-        patch_file = [
+-            "//third_party/grpc:generate_cc_env_fix.patch",
+-            "//third_party/grpc:register_go_toolchain.patch",
+-        ],
+         system_link_files = {
+             "//third_party/systemlibs:BUILD": "bazel/BUILD",
+             "//third_party/systemlibs:grpc.BUILD": "src/compiler/BUILD",
+@@ -448,7 +444,7 @@
+             "//third_party/systemlibs:grpc.bazel.generate_cc.bzl": "bazel/generate_cc.bzl",
+             "//third_party/systemlibs:grpc.bazel.protobuf.bzl": "bazel/protobuf.bzl",
+         },
+-        urls = tf_mirror_urls("https://github.com/grpc/grpc/archive/b54a5b338637f92bfcf4b0bc05e0f57a5fd8fadd.tar.gz"),
++        urls = tf_mirror_urls("https://github.com/grpc/grpc/archive/ada541b1d7dcf9aaf51ec2f835a6e32ad1f382b0.tar.gz"),
+     )
+
+     tf_http_archive(
+@@ -815,10 +811,10 @@
+
+     tf_http_archive(
+         name = "upb",
+-        sha256 = "61d0417abd60e65ed589c9deee7c124fe76a4106831f6ad39464e1525cef1454",
+-        strip_prefix = "upb-9effcbcb27f0a665f9f345030188c0b291e32482",
+-        patch_file = ["//third_party/grpc:upb_platform_fix.patch"],
+-        urls = tf_mirror_urls("https://github.com/protocolbuffers/upb/archive/9effcbcb27f0a665f9f345030188c0b291e32482.tar.gz"),
++        sha256 = "017a7e8e4e842d01dba5dc8aa316323eee080cd1b75986a7d1f94d87220e6502",
++        strip_prefix = "upb-e4635f223e7d36dfbea3b722a4ca4807a7e882e2",
++        #        patch_file = ["//third_party/grpc:upb_platform_fix.patch"],
++        urls = tf_mirror_urls("https://github.com/protocolbuffers/upb/archive/e4635f223e7d36dfbea3b722a4ca4807a7e882e2.tar.gz"),
+     )
+
+     tf_http_archive(
