@@ -1,0 +1,37 @@
+diff --git a/third_party/grpc/add_missing_absl_str_cat_to_tcp_posix.cc.patch b/third_party/grpc/add_missing_absl_str_cat_to_tcp_posix.cc.patch
+new file mode 100644
+--- /dev/null	(date 1741388386526)
++++ b/third_party/grpc/add_missing_absl_str_cat_to_tcp_posix.cc.patch	(date 1741388386526)
+@@ -0,0 +1,12 @@
++diff --git a/src/core/lib/iomgr/tcp_posix.cc b/src/core/lib/iomgr/tcp_posix.cc
++--- a/src/core/lib/iomgr/tcp_posix.cc	(revision 56257bb649b3d3748a7270e1968768b00e3ddbc4)
+++++ b/src/core/lib/iomgr/tcp_posix.cc	(date 1741388283223)
++@@ -48,6 +48,8 @@
++ #include <grpc/support/sync.h>
++ #include <grpc/support/time.h>
++
+++#include "absl/strings/str_cat.h"
+++
++ #include "src/core/lib/address_utils/sockaddr_utils.h"
++ #include "src/core/lib/debug/event_log.h"
++ #include "src/core/lib/debug/stats.h"
+Index: tensorflow/workspace2.bzl
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/tensorflow/workspace2.bzl b/tensorflow/workspace2.bzl
+--- a/tensorflow/workspace2.bzl	(revision 608103d4ac8e0eddffe2d275d48c52cdf61d308d)
++++ b/tensorflow/workspace2.bzl	(date 1741388389581)
+@@ -433,7 +433,10 @@
+     tf_http_archive(
+         name = "com_github_grpc_grpc",
+         sha256 = "20dd8c55b53dbd065fcd4f84aa00e388dddcfd49b99066784681663f86a9e37f",
+-        patch_file = ["//third_party/grpc:tweak_re2_cmake_module_root_to_bazel_structure.patch"],
++        patch_file = [
++            "//third_party/grpc:tweak_re2_cmake_module_root_to_bazel_structure.patch",
++            "//third_party/grpc:add_missing_absl_str_cat_to_tcp_posix.cc.patch",
++        ],
+         strip_prefix = "grpc-ada541b1d7dcf9aaf51ec2f835a6e32ad1f382b0",
+         system_build_file = "//third_party/systemlibs:grpc.BUILD",
+         system_link_files = {
