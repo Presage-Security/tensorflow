@@ -1,0 +1,93 @@
+Index: third_party/grpc/upb_offsetof_multifix.patch
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/third_party/grpc/upb_offsetof_multifix.patch b/third_party/grpc/upb_offsetof_multifix.patch
+new file mode 100644
+--- /dev/null	(date 1744039184662)
++++ b/third_party/grpc/upb_offsetof_multifix.patch	(date 1744039184662)
+@@ -0,0 +1,67 @@
++Index: BUILD
++IDEA additional info:
++Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
++<+>UTF-8
++===================================================================
++diff --git a/BUILD b/BUILD
++--- a/BUILD	(revision 3ab128cca552dc3dc9b3abd621456f7b4aebaf47)
+++++ b/BUILD	(date 1744039024779)
++@@ -1,3 +1,4 @@
+++load("@bazel_skylib//lib:selects.bzl", "selects")
++ load(
++     "//bazel:build_defs.bzl",
++     "UPB_DEFAULT_COPTS",
++@@ -31,6 +32,33 @@
++     constraint_values = ["@platforms//os:windows"],
++ )
++
+++config_setting(
+++    name = "darwin_legacy",
+++    values = {"cpu": "darwin"},
+++    visibility = ["//visibility:public"],
+++)
+++
+++config_setting(
+++    name = "darwin_x86_64",
+++    values = {"cpu": "darwin_x86_64"},
+++    visibility = ["//visibility:public"],
+++)
+++
+++config_setting(
+++    name = "darwin_arm64",
+++    values = {"cpu": "darwin_arm64"},
+++    visibility = ["//visibility:public"],
+++)
+++
+++selects.config_setting_group(
+++    name = "darwin",
+++    match_any = [
+++        ":darwin_legacy",
+++        ":darwin_x86_64",
+++        ":darwin_arm64",
+++    ],
+++)
+++
++ upb_fasttable_enabled(
++     name = "fasttable_enabled",
++     build_setting_default = False,
++Index: bazel/build_defs.bzl
++IDEA additional info:
++Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
++<+>UTF-8
++===================================================================
++diff --git a/bazel/build_defs.bzl b/bazel/build_defs.bzl
++--- a/bazel/build_defs.bzl	(revision 3ab128cca552dc3dc9b3abd621456f7b4aebaf47)
+++++ b/bazel/build_defs.bzl	(date 1744039158049)
++@@ -16,6 +16,11 @@
++
++ UPB_DEFAULT_COPTS = select({
++     "//:windows": [],
+++    "//:darwin": [
+++        # remove first one after MacOS 15.3 is not supported
+++        "-Wno-gnu-offsetof-extensions",
+++        "-Wno-error=c23-extensions",
+++    ],
++     "//:fasttable_enabled_setting": ["-std=gnu99", "-DUPB_ENABLE_FASTTABLE"],
++     "//conditions:default": [
++         # copybara:strip_for_google3_begin
+Index: tensorflow/workspace2.bzl
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/tensorflow/workspace2.bzl b/tensorflow/workspace2.bzl
+--- a/tensorflow/workspace2.bzl	(revision 617e81e2951720daaf6fd81ea4da577efb19e4f5)
++++ b/tensorflow/workspace2.bzl	(date 1744039303984)
+@@ -822,6 +822,7 @@
+         patch_file = [
+             "//third_party/grpc:upb_platform_fix.patch",
+             "//third_party/grpc:disable_upb_offsetof_on_darwin.patch",
++            "//third_party/grpc:upb_offsetof_multifix.patch",
+         ],
+         urls = tf_mirror_urls("https://github.com/protocolbuffers/upb/archive/60607da72e89ba0c84c84054d2e562d8b6b61177.tar.gz"),
+     )
