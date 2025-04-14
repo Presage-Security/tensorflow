@@ -1,0 +1,17 @@
+Index: tensorflow/core/framework/BUILD
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/tensorflow/core/framework/BUILD b/tensorflow/core/framework/BUILD
+--- a/tensorflow/core/framework/BUILD	(revision 617e81e2951720daaf6fd81ea4da577efb19e4f5)
++++ b/tensorflow/core/framework/BUILD	(date 1744066968325)
+@@ -537,7 +537,7 @@
+     srcs = ["tensor_testutil.cc"],
+     hdrs = ["tensor_testutil.h"],
+     copts = tf_copts(),
+-    visibility = ["//tensorflow:internal"],
++    visibility = ["//visibility:public"],
+     deps = [
+         "//tensorflow/core:framework",
+         "//tensorflow/core:lib",
