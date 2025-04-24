@@ -439,6 +439,7 @@ def _tf_repositories():
             "//third_party/grpc:register_go_toolchain.patch",
             "//third_party/grpc:add_missing_absl_strings_numbers_header.patch",
             "//third_party/grpc:tweak_re2_cmake_module_root_to_bazel_structure.patch",
+            "//third_party/grpc:upgrade_cares_cmake_version.patch",
         ],
         system_link_files = {
             "//third_party/systemlibs:BUILD": "bazel/BUILD",
