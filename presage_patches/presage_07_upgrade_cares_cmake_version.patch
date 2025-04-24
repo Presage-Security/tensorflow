@@ -1,0 +1,81 @@
+Index: tensorflow/workspace2.bzl
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/tensorflow/workspace2.bzl b/tensorflow/workspace2.bzl
+--- a/tensorflow/workspace2.bzl	(revision c93a0d6a59d4894681d3bf2ee59c4437e7ec855c)
++++ b/tensorflow/workspace2.bzl	(date 1745508824156)
+@@ -439,6 +439,7 @@
+             "//third_party/grpc:register_go_toolchain.patch",
+             "//third_party/grpc:add_missing_absl_strings_numbers_header.patch",
+             "//third_party/grpc:tweak_re2_cmake_module_root_to_bazel_structure.patch",
++            "//third_party/grpc:upgrade_cares_cmake_version.patch",
+         ],
+         system_link_files = {
+             "//third_party/systemlibs:BUILD": "bazel/BUILD",
+Index: third_party/grpc/upgrade_cares_cmake_version.patch
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/third_party/grpc/upgrade_cares_cmake_version.patch b/third_party/grpc/upgrade_cares_cmake_version.patch
+new file mode 100644
+--- /dev/null	(date 1745508761287)
++++ b/third_party/grpc/upgrade_cares_cmake_version.patch	(date 1745508761287)
+@@ -0,0 +1,55 @@
++Index: bazel/grpc_deps.bzl
++IDEA additional info:
++Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
++<+>UTF-8
++===================================================================
++diff --git a/bazel/grpc_deps.bzl b/bazel/grpc_deps.bzl
++--- a/bazel/grpc_deps.bzl	(revision 2d6b8f61cfdd1c4d2d7c1aae65a4fbf00e3e0981)
+++++ b/bazel/grpc_deps.bzl	(date 1745508661056)
++@@ -258,6 +258,8 @@
++                 "https://storage.googleapis.com/grpc-bazel-mirror/github.com/c-ares/c-ares/archive/e982924acee7f7313b4baa4ee5ec000c5e373c30.tar.gz",
++                 "https://github.com/c-ares/c-ares/archive/e982924acee7f7313b4baa4ee5ec000c5e373c30.tar.gz",
++             ],
+++            patch_args = ["-p1"],
+++            patches = ["@com_github_grpc_grpc//third_party/cares:upgrade_cares_cmake_version.patch"],
++         )
++
++     if "com_google_absl" not in native.existing_rules():
++Index: third_party/cares/BUILD
++IDEA additional info:
++Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
++<+>UTF-8
++===================================================================
++diff --git a/third_party/cares/BUILD b/third_party/cares/BUILD
++--- a/third_party/cares/BUILD	(revision 2d6b8f61cfdd1c4d2d7c1aae65a4fbf00e3e0981)
+++++ b/third_party/cares/BUILD	(date 1745508608406)
++@@ -7,4 +7,5 @@
++     "config_linux/ares_config.h",
++     "config_openbsd/ares_config.h",
++     "config_windows/ares_config.h",
+++    "upgrade_cares_cmake_version.patch",
++ ])
++Index: third_party/cares/upgrade_cares_cmake_version.patch
++IDEA additional info:
++Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
++<+>UTF-8
++===================================================================
++diff --git a/third_party/cares/upgrade_cares_cmake_version.patch b/third_party/cares/upgrade_cares_cmake_version.patch
++new file mode 100644
++--- /dev/null	(date 1745508601532)
+++++ b/third_party/cares/upgrade_cares_cmake_version.patch	(date 1745508601532)
++@@ -0,0 +1,14 @@
+++Index: CMakeLists.txt
+++IDEA additional info:
+++Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+++<+>UTF-8
+++===================================================================
+++diff --git a/CMakeLists.txt b/CMakeLists.txt
+++--- a/CMakeLists.txt	(revision e982924acee7f7313b4baa4ee5ec000c5e373c30)
++++++ b/CMakeLists.txt	(date 1745508392155)
+++@@ -1,4 +1,4 @@
+++-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.0)
++++CMAKE_MINIMUM_REQUIRED (VERSION 3.5.0)
+++
+++ INCLUDE (CheckIncludeFiles)
+++ INCLUDE (CheckTypeSize)
